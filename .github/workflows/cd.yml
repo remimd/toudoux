@@ -1,0 +1,21 @@
+name: Déploiement de la branche dev
+on:
+  push:
+    branches: [ dev ]
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Lancement des commandes SSH
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.PRIVATE_KEY }}
+        port: 22
+        script: |
+          cd ~/toudoux
+          git pull origin dev
+          git status
+          docker compose up -d
