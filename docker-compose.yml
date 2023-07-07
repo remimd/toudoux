@@ -1,7 +1,7 @@
 version: "3.8"
 
 services:
-  api:
+  toudoux-api:
     build:
       context: ./
       dockerfile: ./Dockerfile
@@ -36,6 +36,7 @@ services:
   database:
     image: mariadb:${MARIADB_VERSION:-latest}
     environment:
+      MARIADB_DATABASE: toudoux
       MARIADB_ROOT_PASSWORD: ${DB_PASSWORD:-root}
     volumes:
       - database-storage:/var/lib/mysql
@@ -59,7 +60,7 @@ services:
       - "${NGINX_PORT:-8080}:80"
     depends_on:
       - admin
-      - api
+      - toudoux-api
 
 volumes:
   database-storage:

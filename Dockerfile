@@ -3,7 +3,7 @@ ARG PYTHON_VERSION="3.11.4"
 # Python
 FROM python:${PYTHON_VERSION}-slim
 
-ARG WORK_DIR="/app"
+ARG WORK_DIR="/toudoux"
 
 # Working directory
 WORKDIR ${WORK_DIR}
