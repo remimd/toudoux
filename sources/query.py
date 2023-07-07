@@ -1,5 +1,5 @@
 from os import getenv
-from typing import Any
+from typing import Any, Iterable
 
 from asyncmy import Connection, connect
 
@@ -22,11 +22,21 @@ class Q:
         )
 
     async def clean(self):
-        await self.__connection.close()
+        self.__connection.close()
 
-    async def fetch(self, raw_sql: str) -> dict[str, Any]:
+    async def execute(self, raw_sql: str):
         async with self.__connection.cursor() as cursor:
-            return await cursor.fetch(raw_sql)
+            await cursor.execute(raw_sql)
+
+    async def fetch(self, raw_sql: str) -> Iterable[dict[str, Any]]:
+        async with self.__connection.cursor() as cursor:
+            await cursor.execute(raw_sql)
+            response = await cursor.fetchall()
+
+        return tuple(
+            {column[0]: value for column, value in zip(cursor.description, data)}
+            for data in response
+        )
 
 
 query = Q()
