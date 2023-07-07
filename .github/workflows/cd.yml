@@ -16,7 +16,8 @@ jobs:
         port: 22
         script: |
           cd ~/toudoux
-          git reset --hard origin/dev
+          git reset --hard
+          git pull
           git status
           sed -i 's/localhost/takerboust.fr/g' nginx/conf.d/*.conf
           docker compose up -d --build
