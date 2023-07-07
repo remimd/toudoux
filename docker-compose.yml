@@ -13,8 +13,8 @@ services:
       DB_PASSWORD: ${DB_PASSWORD:-root}
       UVICORN_HOST: 0.0.0.0
     networks:
-      - database-network
-      - nginx-network
+      - toudoux-database
+      - toudoux-nginx
     expose:
       - "${PORT:-8000}"
     depends_on:
@@ -26,8 +26,8 @@ services:
       PMA_ARBITRARY: 1
       PMA_HOST: database
     networks:
-      - database-network
-      - nginx-network
+      - admin-database
+      - admin-nginx
     expose:
       - "80"
     depends_on:
@@ -41,7 +41,8 @@ services:
     volumes:
       - database-storage:/var/lib/mysql
     networks:
-      - database-network
+      - admin-database
+      - toudoux-database
     expose:
       - "3306"
 
@@ -55,7 +56,8 @@ services:
       - ./nginx/templates/:/etc/nginx/templates/
       - ./nginx/log/:/var/log/nginx/
     networks:
-      - nginx-network
+      - admin-nginx
+      - toudoux-nginx
     ports:
       - "${NGINX_PORT:-8080}:80"
     depends_on:
@@ -66,5 +68,7 @@ volumes:
   database-storage:
 
 networks:
-  database-network:
-  nginx-network:
+  admin-database:
+  admin-nginx:
+  toudoux-database:
+  toudoux-nginx:
