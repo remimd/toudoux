@@ -18,4 +18,5 @@ jobs:
           cd ~/toudoux
           git pull origin dev
           git status
+          sed -i 's/localhost/takerboust.fr/g' nginx/conf.d/*.conf
           docker compose up -d
