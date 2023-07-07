@@ -21,4 +21,4 @@ async def clean(_):
 
 @app.router.get("/")
 def hello() -> str:
-    return "Hello world!"
+    return "Hello toto
