@@ -38,5 +38,12 @@ class Q:
             for data in response
         )
 
+    async def fetch_one(self, raw_sql: str) -> dict[str, Any]:
+        async with self.__connection.cursor() as cursor:
+            await cursor.execute(raw_sql)
+            response = await cursor.fetchone()
+
+        return {column[0]: value for column, value in zip(cursor.description, response)}
+
 
 query = Q()

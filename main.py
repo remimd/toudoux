@@ -17,3 +17,8 @@ async def setup(_):
 @app.on_stop
 async def clean(_):
     await query.clean()
+
+
+@app.router.get("/")
+def hello() -> str:
+    return "Hello world!"

@@ -11,5 +11,5 @@ class Do:
 @dataclass(kw_only=True, slots=True)
 class ToDo:
     name: str
-    list: list[Do] = field(default_factory=list)
+    do_list: list[Do] = field(default_factory=list)
     id: UUID = field(default_factory=uuid4)
